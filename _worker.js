@@ -1,5 +1,5 @@
-// 如何生成自己的UUID:
-// [Windows] 按下"Win + R"键，输入cmd并运行：Powershell -NoExit -Command "[guid]::NewGuid()"。
+// 部署完成后，访问路径/list获取节点信息
+
 let userID = 'uuid';
 
 const proxyIPs = ['cdn-all.xn--b6gac.eu.org', 'cdn.xn--b6gac.eu.org', 'cdn-b100.xn--b6gac.eu.org', 'edgetunnel.anycast.eu.org', 'cdn.anycast.eu.org'];
