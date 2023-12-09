@@ -108,6 +108,16 @@
             margin-top: 20px;
             text-align: left;
         }
+
+        #copyright {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            text-align: center;
+            background-color: #f0e6fa;
+            /* 背景色可以根据你的页面颜色进行调整 */
+            padding: 1px;
+        }
     </style>
 </head>
 
@@ -135,9 +145,11 @@
             <button id="copyButton">复制</button>
             <pre id="jsCodeDisplay"></pre>
         </div>
-        <p>&copy; 2023 <a href="https://ymyuuu.github.io/" target="_blank">Mingyu</a></p>
+        <!-- <p>Copyright &copy; 2023 <a href="https://github.com/Linzjian666" target="_blank">Linzjian666</a>. All Rights Reserved.</p> -->
 
     </div>
+    <p id="copyright">Copyright &copy; 2023 <a href="https://github.com/Linzjian666" target="_blank">Linzjian666</a>.
+        All Rights Reserved.</p>
 
     <script>
         var textarea = document.getElementById("ipInput");
