@@ -120,8 +120,11 @@
                 <input type="text" id="uuidInput" name="uuidInput" placeholder="在此输入UUID" />
                 <button id="generateUUIDButton">生成UUID</button>
             </div>
-            <label for="ipInput" ,id="ipLabel">ProxyIPs:</label>
-            <input type="text" id="ipInput" name="ipInput" rows="1" placeholder="在此输入ProxyIPs,留空则使用默认值">
+            <div>
+                <label for="ipInput" ,id="ipLabel">ProxyIPs:</label>
+                <input type="text" id="ipInput" name="ipInput" rows="1" placeholder="在此输入ProxyIPs,如有多个请使用英文逗号分隔">
+                <button id="generateIPButton">使用默认值</button>
+            </div>
             <input type="button" id="generateButton" value="生成" />
 
         </div>
@@ -163,26 +166,37 @@
                 const generatedUUID = generateUUID();
                 uuidInput.value = generatedUUID;
             });
+
+            const generateIPButton = document.getElementById("generateIPButton");
+
+            generateIPButton.addEventListener("click", function () {
+                // 默认ProxyIPs填入框中
+                ipInput.value = "cdn-b100.xn--b6gac.eu.org,edgetunnel.anycast.eu.org,cdn.anycast.eu.org";
+            })
             generateButton.addEventListener("click", async function () {
                 // 获取输入的UUID，如果为空则提示生成
                 let generatedUUID = uuidInput.value.trim();
                 if (generatedUUID === "") {
-                    alert("请输入UUID或点击 '生成UUID' 按钮生成");
+                    alert("请输入UUID！");
                     return;
                 }
                 // 检查UUID是否合法
                 if (!/^[a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[89ab][a-f0-9]{3}-[a-f0-9]{12}$/.test(generatedUUID)) {
-                    alert("请输入合法的UUID");
+                    alert("请输入合法的UUID！");
                     return;
                 }
 
                 // 获取输入的代理IP
                 let proxyIPInputValue = ipInput.value.trim();
                 if (proxyIPInputValue === "") {
-                    proxyIPInputValue =
-                        "cdn-b100.xn--b6gac.eu.org,edgetunnel.anycast.eu.org,cdn.anycast.eu.org"; //默认
+                    alert("请输入ProxyIPs！");
+                    return;
                 }
                 const proxyIPs = extractProxyIPs(proxyIPInputValue);
+                if (proxyIPs.length === 0) {
+                    alert("请输入合法的ProxyIPs！目前暂不支持ipv6！");
+                    return;
+                }
 
 
                 // 生成const proxyIPs函数
