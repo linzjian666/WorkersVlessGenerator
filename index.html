@@ -29,27 +29,30 @@
 				box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 			}
 
-			#uuidInput{
+            #uuidInput{
 				width: 50%;
 				padding: 8px;
 				border: 1px solid #ccc;
 				border-radius: 3px;
 				box-sizing: border-box;
-				display: block;
 				margin-top: 10px;
 				margin-bottom: 10px;
 			}
 			#ipInput {
-				width: 100%;
+				width: 50%;
 				padding: 8px;
 				border: 1px solid #ccc;
 				border-radius: 3px;
 				box-sizing: border-box;
-				display: block;
 				margin-top: 10px;
 				margin-bottom: 10px;
 			}
-
+            
+            label {
+    display: inline-block; 
+    vertical-align: middle; 
+    margin-right: 10px; 
+}
 
 			input[type="button"] {
 				background-color: #ff6b81;
@@ -116,8 +119,8 @@
                 <input type="text" id="uuidInput" name="uuidInput" placeholder="在此输入UUID" />
                 <button id="generateUUIDButton">生成UUID</button>
                 </div>
-				<label for="ipInput">ProxyIPs:</label>
-				<textarea id="ipInput" name="ipInput" rows="1" placeholder="在此输入ProxyIPs,留空则使用默认值"></textarea>
+				<label for="ipInput" ,id="ipLabel">ProxyIPs:</label>
+				<input type="text" id="ipInput" name="ipInput" rows="1" placeholder="在此输入ProxyIPs,留空则使用默认值">
 				<input type="button" id="generateButton" value="生成" />
 
 			</div>
