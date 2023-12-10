@@ -2,19 +2,18 @@
  * @Author: Linzjian666
  * @Date: 2023-12-09 20:11:30
  * @LastEditors: Linzjian666
- * @LastEditTime: 2023-12-09 23:31:48
+ * @LastEditTime: 2023-12-10 09:06:38
 -->
 <!DOCTYPE html>
 <html lang="zh-CN">
 
 <head>
-    <link rel="icon" type="image/jpg" href="https://cdn.jsdelivr.net/gh/png-dot/pngpng@main/20231112-014821-y4poc8.jpg">
     <meta charset="UTF-8">
     <meta name="viewport"
         content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui" />
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-    <title>Generate workers online</title>
+    <title>Generate Workers Vless</title>
     <script src="https://raw.githubusercontent.com/linzjian666/GeneratorWorkersVless/main/_worker.js">
     </script>
     <style>
@@ -300,8 +299,8 @@
 
             function replaceCodeInJs(jsCode, generatedUUID, proxyIPsFunction) {
                 updatedCode = jsCode.replace(/let userID = 'uuid';/, `let userID = '${generatedUUID}';`);
-                const updatedCode = updatedCode.replace(/const proxyIPs = .+?;/, proxyIPsFunction);
-                return updatedCode;
+                return updatedCode.replace(/const proxyIPs = .+?;/, proxyIPsFunction);
+                // return updatedCode;
             }
         });
     </script>
