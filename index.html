@@ -2,7 +2,7 @@
  * @Author: Linzjian666
  * @Date: 2023-12-09 20:11:30
  * @LastEditors: Linzjian666
- * @LastEditTime: 2023-12-10 11:10:51
+ * @LastEditTime: 2023-12-10 14:31:38
 -->
 <!DOCTYPE html>
 <html lang="zh-CN">
@@ -145,7 +145,7 @@
         <div class="form-group">
             <div>
                 <label for="uuidInput">UUID:</label>
-                <input type="text" id="uuidInput" name="uuidInput" placeholder="在此输入UUID" />
+                <input type="text" id="uuidInput" name="uuidInput" placeholder="在此输入UUID,留空则自动生成" />
                 <button id="generateUUIDButton">生成UUID</button>
             </div>
             <div>
@@ -214,6 +214,7 @@
                 let generatedUUID = uuidInput.value.trim();
                 if (generatedUUID === "") {
                     generatedUUID = generateUUID();
+                    uuidInput.value = generatedUUID;
                 }
                 // 检查UUID是否合法
                 else if (!/^[a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[89ab][a-f0-9]{3}-[a-f0-9]{12}$/.test(generatedUUID)) {
@@ -224,9 +225,11 @@
                 // 获取输入的代理IP
                 let proxyIPInputValue = ipInput.value.trim();
                 if (proxyIPInputValue === "") {
-                    proxyIPInputValue = "cdn-b100.xn--b6gac.eu.org,edgetunnel.anycast.eu.org,cdn.anycast.eu.org";
+                    proxyIPsFunction = `const proxyIPs = [];`
+                    // proxyIPInputValue = "cdn-b100.xn--b6gac.eu.org,edgetunnel.anycast.eu.org,cdn.anycast.eu.org";
+                    // ipInput.value = proxyIPInputValue;
                 }
-                const proxyIPs = extractProxyIPs(proxyIPInputValue);
+                else {const proxyIPs = extractProxyIPs(proxyIPInputValue);
                 if (proxyIPs.length === 0) {
                     alert("非法的ProxyIPs！");
                     return;
@@ -234,6 +237,7 @@
 
                 // 生成const proxyIPs函数
                 const proxyIPsFunction = `const proxyIPs = ${JSON.stringify(proxyIPs)};`;
+                }
 
                 // 获取输入的用户名和密码
                 let username = userInput.value.trim();
