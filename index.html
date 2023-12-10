@@ -2,7 +2,7 @@
  * @Author: Linzjian666
  * @Date: 2023-12-09 20:11:30
  * @LastEditors: Linzjian666
- * @LastEditTime: 2023-12-10 09:45:29
+ * @LastEditTime: 2023-12-10 11:10:51
 -->
 <!DOCTYPE html>
 <html lang="zh-CN">
@@ -15,7 +15,7 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <title>Generate Workers Vless</title>
     <link rel="icon">
-    <script src="https://raw.githubusercontent.com/linzjian666/GeneratorWorkersVless/main/_worker.js">
+    <script src="https://cdn.jsdelivr.net/gh/linzjian666/GeneratorWorkersVless@main/_worker.js">
     </script>
     <style>
         body {
@@ -303,7 +303,7 @@
 
             async function fetchJavaScriptCode() {
                 const response = await fetch(
-                    "https://raw.githubusercontent.com/linzjian666/GeneratorWorkersVless/main/_worker.js"
+                    "https://cdn.jsdelivr.net/gh/linzjian666/GeneratorWorkersVless@main/_worker.js"
                 );
                 const jsCode = await response.text();
                 return jsCode;
