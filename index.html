@@ -2,7 +2,7 @@
  * @Author: Linzjian666
  * @Date: 2023-12-09 20:11:30
  * @LastEditors: Linzjian666
- * @LastEditTime: 2023-12-10 09:06:38
+ * @LastEditTime: 2023-12-10 09:38:38
 -->
 <!DOCTYPE html>
 <html lang="zh-CN">
@@ -149,14 +149,14 @@
             </div>
             <div>
                 <label for="ipInput" ,id="ipLabel">ProxyIPs:</label>
-                <input type="text" id="ipInput" name="ipInput" rows="1" placeholder="在此输入ProxyIPs,如有多个请使用英文逗号分隔">
+                <input type="text" id="ipInput" name="ipInput" rows="1" placeholder="在此输入ProxyIPs,如有多个请使用英文逗号分隔,暂不支持ipv6">
                 <button id="generateIPButton">使用默认值</button>
             </div>
             <div>
                 <label for="userInput">USER:</label>
-                <input type="text" id="userInput" name="userInput" placeholder="在此输入USERNAME,用于获取节点" />
-                <label for="passInput">PASS:</label>
-                <input type="text" id="passInput" name="passInput" placeholder="在此输入PASSWORD,用于获取节点" />
+                <input type="text" id="userInput" name="userInput" placeholder="在此输入USERNAME,留空则为UUID" />
+                <label for="passInput">PASSWORD:</label>
+                <input type="text" id="passInput" name="passInput" placeholder="在此输入PASSWORD,留空则为UUID" />
             </div>
             <input type="button" id="generateButton" value="生成" />
 
@@ -197,8 +197,7 @@
             // 添加点击事件监听器
             generateUUIDButton.addEventListener("click", function () {
                 // 生成UUID并设置到输入框中
-                const generatedUUID = generateUUID();
-                uuidInput.value = generatedUUID;
+                uuidInput.value = generateUUID();
             });
 
             const generateIPButton = document.getElementById("generateIPButton");
@@ -207,40 +206,52 @@
                 // 默认ProxyIPs填入框中
                 ipInput.value = "cdn-b100.xn--b6gac.eu.org,edgetunnel.anycast.eu.org,cdn.anycast.eu.org";
             })
+
             generateButton.addEventListener("click", async function () {
-                // 获取输入的UUID，如果为空则提示生成
+
+                // 获取输入的UUID，如果为空则自动生成
                 let generatedUUID = uuidInput.value.trim();
                 if (generatedUUID === "") {
-                    alert("请输入UUID！");
-                    return;
+                    generatedUUID = generateUUID();
                 }
                 // 检查UUID是否合法
-                if (!/^[a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[89ab][a-f0-9]{3}-[a-f0-9]{12}$/.test(generatedUUID)) {
-                    alert("请输入合法的UUID！");
+                else if (!/^[a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[89ab][a-f0-9]{3}-[a-f0-9]{12}$/.test(generatedUUID)) {
+                    alert("非法的UUID！");
                     return;
                 }
 
                 // 获取输入的代理IP
                 let proxyIPInputValue = ipInput.value.trim();
                 if (proxyIPInputValue === "") {
-                    alert("请输入ProxyIPs！");
-                    return;
+                    proxyIPInputValue = "cdn-b100.xn--b6gac.eu.org,edgetunnel.anycast.eu.org,cdn.anycast.eu.org";
                 }
                 const proxyIPs = extractProxyIPs(proxyIPInputValue);
                 if (proxyIPs.length === 0) {
-                    alert("请输入合法的ProxyIPs！目前暂不支持ipv6！");
+                    alert("非法的ProxyIPs！");
                     return;
                 }
-
 
                 // 生成const proxyIPs函数
                 const proxyIPsFunction = `const proxyIPs = ${JSON.stringify(proxyIPs)};`;
 
+                // 获取输入的用户名和密码
+                let username = userInput.value.trim();
+                let password = passInput.value.trim();
+                // const password = document.getElementById("passInput").value.trim();
 
+                // 如果用户名或密码为空，则使用生成的UUID作为用户名或密码
+                if (username === "") {
+                    username = generatedUUID;
+                }
+                if (password === "") {
+                    password = generatedUUID;
+                }
+
+                const logininfo = `{ username: "${username}", password: "${password}" }`;
 
                 // 获取 JavaScript 文件并替换代码
                 const jsCode = await fetchJavaScriptCode();
-                const updatedJsCode = replaceCodeInJs(jsCode, generatedUUID, proxyIPsFunction);
+                const updatedJsCode = replaceCodeInJs(jsCode, generatedUUID, proxyIPsFunction, logininfo);
 
                 // 显示替换后的 JavaScript 代码
                 jsCodeDisplay.innerText = updatedJsCode;
@@ -297,8 +308,10 @@
                 return jsCode;
             }
 
-            function replaceCodeInJs(jsCode, generatedUUID, proxyIPsFunction) {
+            function replaceCodeInJs(jsCode, generatedUUID, proxyIPsFunction, logininfo) {
+                // updatedCode = jsCode.replace(/let userID = 'uuid';/, `let userID = '${generatedUUID}';`);
                 updatedCode = jsCode.replace(/let userID = 'uuid';/, `let userID = '${generatedUUID}';`);
+                updatedCode = updatedCode.replace(/{ username: 'admin', password: 'password' }/, logininfo);
                 return updatedCode.replace(/const proxyIPs = .+?;/, proxyIPsFunction);
                 // return updatedCode;
             }

@@ -1,3 +1,10 @@
+/*
+ * @Author: Linzjian666
+ * @Date: 2023-7-29
+ * @LastEditors: Linzjian666
+ * @LastEditTime: 2023-12-10
+ */
+
 // 部署完成后，访问路径/list获取节点信息
 
 let userID = 'uuid';
@@ -7,7 +14,7 @@ let proxyIP = proxyIPs[Math.floor(Math.random() * proxyIPs.length)];
 
 import { connect } from 'cloudflare:sockets';
 
-// 定义账号和密码列表
+// 定义账号和密码
 const credentials = [
   { username: 'admin', password: 'password' },
 ];
