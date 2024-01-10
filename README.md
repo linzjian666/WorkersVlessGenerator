@@ -1,4 +1,4 @@
-# Generator Workers Vless
+# Workers Vless Generator
 一个用以生成 Workers Vless 配置代码的HTML页面
 
 ## 部署:
