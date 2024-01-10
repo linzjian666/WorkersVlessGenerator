@@ -1,7 +1,9 @@
 # Workers Vless Generator
 一个用以生成 Workers Vless 配置代码的HTML页面
 
-[![Netlify Status](https://api.netlify.com/api/v1/badges/6f6f3468-fc5b-47c3-8fa5-0363f42f4d47/deploy-status)](https://gen-vless.netlify.app)
+[![Netlify](https://api.netlify.com/api/v1/badges/6f6f3468-fc5b-47c3-8fa5-0363f42f4d47/deploy-status)](https://gen-vless.netlify.app)
+[![Vercel](https://img.shields.io/github/deployments/linzjian666/WorkersVlessGenerator/Production?style=flat&logo=vercel&logoColor=vercel&label=Vercel)](https://gen-vless.vercel.app)
+
 
 ## 部署:
 复制生成的代码后，在[Cloudflare Workers](https://workers.cloudflare.com/)控制台新建项目并部署
