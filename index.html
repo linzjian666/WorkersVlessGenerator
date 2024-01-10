@@ -13,7 +13,7 @@
         content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui" />
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-    <title>Generate Workers Vless</title>
+    <title>Workers Vless Generator</title>
     <link rel="icon">
     <script src="https://cdn.jsdelivr.net/gh/linzjian666/GeneratorWorkersVless@main/_worker.js">
     </script>
@@ -122,7 +122,6 @@
             border: 1px solid #ccc;
             border-radius: 5px;
             display: none;
-            /* 初始时不显示滚动容器 */
             margin-top: 20px;
             text-align: left;
         }
@@ -133,7 +132,6 @@
             width: 100%;
             text-align: center;
             background-color: #f0e6fa;
-            /* 背景色可以根据你的页面颜色进行调整 */
             padding: 1px;
         }
     </style>
@@ -141,7 +139,7 @@
 
 <body>
     <div id="container">
-        <h1>Generate Workers Vless</h1>
+        <h1>Workers Vless Generator</h1>
         <div class="form-group">
             <div>
                 <label for="uuidInput">UUID:</label>
@@ -155,9 +153,9 @@
             </div>
             <div>
                 <label for="userInput">USER:</label>
-                <input type="text" id="userInput" name="userInput" placeholder="在此输入USERNAME,留空则为UUID" />
+                <input type="text" id="userInput" name="userInput" placeholder="在此输入网页用户名,留空则为UUID" />
                 <label for="passInput">PASSWORD:</label>
-                <input type="text" id="passInput" name="passInput" placeholder="在此输入PASSWORD,留空则为UUID" />
+                <input type="text" id="passInput" name="passInput" placeholder="在此输入网页密码,留空则为UUID" />
             </div>
             <input type="button" id="generateButton" value="生成" />
 
