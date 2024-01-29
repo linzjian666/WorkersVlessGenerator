@@ -39,7 +39,7 @@ export default {
 			if (!upgradeHeader || upgradeHeader !== 'websocket') {
 				const url = new URL(request.url);
 				switch (url.pathname) {
-					case `/${userID}-vless`:
+					case `${path}`:
 						return new Response(JSON.stringify(request.cf), { status: 200 });
           case '/list': {
             // Check if the request has valid authentication credentials
@@ -536,8 +536,8 @@ async function handleUDPOutBound(webSocket, vlessResponseHeader, log) {
 }
 
 function getVLESSConfig(userID, hostName) {
-	const vlessws = `vless://${userID}@icook.hk:80?encryption=none&type=ws&host=${hostName}&path=%2F%3Fed%3D2048#${hostName}`
-	const vlesswstls = `vless://${userID}@icook.hk:443?encryption=none&security=tls&sni=${hostName}&fp=randomized&type=ws&host=${hostName}&path=%2F${userID}-vless#${hostName}`
+	const vlessws = `vless://${userID}@visa.com:80?encryption=none&type=ws&host=${hostName}&path=${path}%3Fed%3D2048#${hostName}`
+	const vlesswstls = `vless://${userID}@visa.com:443?encryption=none&security=tls&sni=${hostName}&fp=randomized&type=ws&host=${hostName}&path=${path}%3Fed%3D2048#${hostName}`
 return `
 ################################################################
 v2ray
@@ -557,14 +557,14 @@ CF-workers-vless-ws:
 ---------------------------------------------------------------
 - type: vless
   name: ${hostName}
-  server: icook.hk
+  server: visa.com
   port: 80
   uuid: ${userID}
   network: ws
   udp: false
   client-fingerprint: chrome
   ws-opts:
-    path: "/${userID}-vless"
+    path: "${path}"
     headers:
       host: ${hostName}
 ---------------------------------------------------------------
@@ -572,7 +572,7 @@ CF-workers-vless-ws-tls:
 ---------------------------------------------------------------
 - type: vless
   name: ${hostName}
-  server: icook.hk
+  server: visa.com
   port: 443
   uuid: ${userID}
   network: ws
@@ -581,7 +581,7 @@ CF-workers-vless-ws-tls:
   sni: ${hostName}
   client-fingerprint: chrome
   ws-opts:
-    path: "/${userID}-vless"
+    path: "${path}"
     headers:
       host: ${hostName}
 ---------------------------------------------------------------
