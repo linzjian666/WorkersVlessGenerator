@@ -2,12 +2,14 @@
  * @Author: Linzjian666
  * @Date: 2023-7-29
  * @LastEditors: Linzjian666
- * @LastEditTime: 2023-12-10
+ * @LastEditTime: 2024-01-29 15:23:02
  */
 
 // 部署完成后，访问路径/list获取节点信息
 
 let userID = 'uuid';
+
+let path = `/${userID}-vless`;
 
 const proxyIPs = ['cdn-all.xn--b6gac.eu.org', 'cdn.xn--b6gac.eu.org', 'cdn-b100.xn--b6gac.eu.org', 'edgetunnel.anycast.eu.org', 'cdn.anycast.eu.org'];
 let proxyIP = proxyIPs[Math.floor(Math.random() * proxyIPs.length)];
@@ -36,32 +38,35 @@ export default {
 			userID = env.UUID || userID;
 			proxyIP = env.PROXYIP || proxyIP;
 			const upgradeHeader = request.headers.get('Upgrade');
+			const url = new URL(request.url);
 			if (!upgradeHeader || upgradeHeader !== 'websocket') {
-				const url = new URL(request.url);
 				switch (url.pathname) {
 					case `${path}`:
 						return new Response(JSON.stringify(request.cf), { status: 200 });
-          case '/list': {
-            // Check if the request has valid authentication credentials
-            const authHeader = request.headers.get('Authorization');
-            if (!authHeader || !isValidCredentials(authHeader)) {
-              // Authentication failed, return a 401 Unauthorized response
-              return new Response('Unauthorized', { status: 401, headers: { 'WWW-Authenticate': 'Basic realm="Restricted Area"' } });
-            }
+          			case '/list': 
+            			// Check if the request has valid authentication credentials
+            			const authHeader = request.headers.get('Authorization');
+            			if (!authHeader || !isValidCredentials(authHeader)) {
+              				// Authentication failed, return a 401 Unauthorized response
+              				return new Response('Unauthorized', { status: 401, headers: { 'WWW-Authenticate': 'Basic realm="Restricted Area"' } });
+            			}
     
-            const vlessConfig = getVLESSConfig(userID, request.headers.get('Host'));
-            return new Response(`${vlessConfig}`, {
-              status: 200,
-              headers: {
-                "Content-Type": "text/plain;charset=utf-8",
-              }
-            });
-          }
+            			const vlessConfig = getVLESSConfig(userID, request.headers.get('Host'));
+            			return new Response(`${vlessConfig}`, {
+              				status: 200,
+              				headers: {
+                				"Content-Type": "text/plain;charset=utf-8",
+              				}
+            			});
 					default:
 						return new Response('Hello world!!', { status: 200 });
 				}
 			} else {
-				return await vlessOverWSHandler(request);
+				if (!url.pathname || url.pathname !== `${path}`) {
+					return new Response('Hello world!!', { status: 200 });
+				} else {
+					return await vlessOverWSHandler(request);
+				}
 			}
 		} catch (err) {
 			/** @type {Error} */ let e = err;
